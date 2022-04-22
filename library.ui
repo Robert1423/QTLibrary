@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>751</width>
+    <width>885</width>
     <height>617</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>361</width>
+      <width>491</width>
       <height>491</height>
      </rect>
     </property>
@@ -32,7 +32,7 @@
    <widget class="QCalendarWidget" name="calendarWidget">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>520</x>
       <y>10</y>
       <width>341</width>
       <height>241</height>
@@ -42,16 +42,38 @@
      <string notr="true"/>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>520</x>
       <y>300</y>
       <width>341</width>
       <height>271</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QPushButton" name="ShowReaders">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Pokaż bazę czytelników</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="ShowBooks">
        <property name="sizePolicy">
@@ -81,25 +103,19 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QPushButton" name="ShowReaders">
+     <item row="3" column="0">
+      <widget class="QPushButton" name="AddBook">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="baseSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>Pokaż bazę czytelników</string>
+        <string>Dodaj książkę</string>
        </property>
       </widget>
      </item>
@@ -135,30 +151,14 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QPushButton" name="AddBook">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>Dodaj książkę</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>510</y>
-      <width>361</width>
+      <width>491</width>
       <height>26</height>
      </rect>
     </property>
@@ -175,12 +175,12 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>540</y>
-      <width>361</width>
+      <width>491</width>
       <height>31</height>
      </rect>
     </property>
@@ -257,7 +257,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>751</width>
+     <width>885</width>
      <height>21</height>
     </rect>
    </property>

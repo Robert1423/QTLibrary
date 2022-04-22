@@ -2,6 +2,10 @@
 #define LIBRARY_H
 
 #include <QMainWindow>
+#include <QLineEdit>
+#include <QTableView>
+#include <QStandardItemModel>
+#include <QMessageBox>
 #include "dialogaddreader.h"
 #include "dialogaddbook.h"
 #include "dialogfinishrent.h"
@@ -12,7 +16,11 @@
 #include "dialogeditreader.h"
 #include <vector>
 #include <time.h>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/vector.hpp>
 
+using namespace std;
 const static double duemultiply = 5;//wartość kary za nieoddanie w terminie, dla uproszczenia
 QT_BEGIN_NAMESPACE
 namespace Ui { class Library; }
@@ -21,6 +29,10 @@ QT_END_NAMESPACE
 class Library : public QMainWindow
 {
     Q_OBJECT
+
+    QStandardItemModel *tableViewModel;
+
+
 
 public:
     Library(QWidget *parent = nullptr);

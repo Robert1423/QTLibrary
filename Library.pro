@@ -7,7 +7,9 @@ CONFIG += c++17
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+INCLUDEPATH += D:\boost\boost_1_79_0
 
+#LIBS += D:\boost\boost_1_79_0\stage\lib -l boost_system-mgw11-mt-d-x64-1_79
 SOURCES += \
     book.cpp \
     bookbase.cpp \
