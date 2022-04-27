@@ -15,6 +15,9 @@ public:
     explicit DialogEditReader(QWidget *parent = nullptr);
     ~DialogEditReader();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::DialogEditReader *ui;
 };

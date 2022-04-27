@@ -16,9 +16,9 @@ void Rent::Show(QStandardItemModel *table)
 {
     int index = table->rowCount();
     table->setRowCount(index+1);
-    QStandardItem *itemBookAuthor = new QStandardItem(QString::fromStdString(rented.Author()));
+    QStandardItem *itemBookAuthor = new QStandardItem(rented.Author());
     table->setItem(index,0,itemBookAuthor);
-    QStandardItem *itemBookTitle = new QStandardItem(QString::fromStdString(rented.Title()));
+    QStandardItem *itemBookTitle = new QStandardItem(rented.Title());
     table->setItem(index,1,itemBookTitle);
     tm * dateRent = localtime(&rentDate);
     QString dateR = QString::number(dateRent->tm_mday)+"/"+QString::number(dateRent->tm_mon+1)+"/"+
@@ -42,4 +42,15 @@ double Rent::CalculateDue()
     if (diffrence>time)
         due=(diffrence-time)*duemultiply;
     return due;
+}
+
+QDataStream &operator<<(QDataStream & out, const Rent &b)
+{
+    out << b.rented << b.rentDate << b.due << b.time;
+    return out;
+}
+QDataStream &operator>>(QDataStream & in, Rent &b)
+{
+    in >> b.rented >> b.rentDate >> b.due >> b.time;
+    return in;
 }

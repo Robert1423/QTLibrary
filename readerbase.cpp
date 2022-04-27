@@ -6,17 +6,51 @@ ReaderBase::ReaderBase()
 }
 void ReaderBase::ShowBase(QStandardItemModel * table)
 {
-    for (Reader r : readers)
+    foreach (Reader r, readers)
         r.Display(table);
 }
-int ReaderBase::Search(string t, int i)
+vector<int> ReaderBase::SearchAll(string &t)
 {
-    for (i; i<(int)readers.size(); i++)
+    vector<int> res;
+    transform(t.begin(),t.end(),t.begin(),[](unsigned char c){ return toupper(c); });
+    for (int i=0; i<(int)readers.size(); i++)
     {
-        if (t==readers[i].Id())
+        string test = readers[i].Id().toStdString();
+        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
+        if (test.find(t) != string::npos)
+            res.push_back(i);
+        test = readers[i].Name().toStdString();
+        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
+        if (test.find(t) != string::npos)
+           res.push_back(i);
+    }
+    return res;
+}
+
+int ReaderBase::Search(string &t)
+{
+    transform(t.begin(),t.end(),t.begin(),[](unsigned char c){ return toupper(c); });
+    for (int i=0; i<(int)readers.size(); i++)
+    {
+        string test = readers[i].Id().toStdString();
+        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
+        if (t == test)
             return i;
-        if (t==readers[i].Name())
+        test = readers[i].Name().toStdString();
+        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
+        if (t == test)
             return i;
     }
     return -1;
+}
+
+QDataStream &operator<<(QDataStream & out, const ReaderBase &b)
+{
+    out << b.readers;
+    return out;
+}
+QDataStream &operator>>(QDataStream & in, ReaderBase &b)
+{
+    in >> b.readers;
+    return in;
 }

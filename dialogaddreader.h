@@ -15,6 +15,9 @@ public:
     explicit DialogAddReader(QWidget *parent = nullptr);
     ~DialogAddReader();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::DialogAddReader *ui;
 };

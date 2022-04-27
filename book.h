@@ -6,32 +6,28 @@
 class Book
 {
 protected:
-    friend class boost::serialization::access;
-    std::string author;
-    std::string title;
+    QString author;
+    QString title;
     int quantity;
-    std::string id;
-    template<class Archive>
-    void serialize(Archive &a, const unsigned version)
-    {
-        a & author & title & quantity;
-    }
+    QString id;
 public:
     Book() : author(""),title(""),quantity(0),id(""){}
-    Book(std::string a, std::string t, int q,int i) : author(a), title(t), quantity(q) { SetId(i); }
+    Book(QString a, QString t, int q,int i) : author(a), title(t), quantity(q) { SetId(i); }
     void SetId(int index);
     bool IsAvalaible();
     void Rent() { quantity--; }
     void FinishRent() { quantity++; }
     void Show(QLineEdit * i, QLineEdit *a, QLineEdit *t, QLineEdit *q);
     void Display(QStandardItemModel *table);
-    void EditAuthor(std::string a) { author=a; }
-    void EditTitle(std::string t) { title=t; }
+    void EditAuthor(QString a) { author=a; }
+    void EditTitle(QString t) { title=t; }
     void EditQuantity(int q) { quantity=q; }
-    string Author() {return author;}
-    string Title() {return title;}
+    QString Author() {return author;}
+    QString Title() {return title;}
     int Quantity() {return quantity;}
-    string Id() {return id;}
+    QString Id() {return id;}
+    friend QDataStream &operator<<(QDataStream & out, const Book &b);
+    friend QDataStream &operator>>(QDataStream & in, Book &b);
 };
 
 #endif // BOOK_H

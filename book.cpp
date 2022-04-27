@@ -3,11 +3,11 @@
 void Book::SetId(int index)
 {
     if (index>999)
-        id+="B"+to_string(index);
+        id+="B"+QString::number(index);
     else if (index>99)
-        id+="B0"+to_string(index);
+        id+="B0"+QString::number(index);
     else
-        id+="B00"+to_string(index);
+        id+="B00"+QString::number(index);
 }
 
 bool Book::IsAvalaible()
@@ -17,9 +17,9 @@ bool Book::IsAvalaible()
 
 void Book::Show(QLineEdit * i, QLineEdit *a, QLineEdit *t, QLineEdit *q)
 {
-    i->setText(QString::fromStdString(id));
-    a->setText(QString::fromStdString(author));
-    t->setText(QString::fromStdString(title));
+    i->setText(id);
+    a->setText(author);
+    t->setText(title);
     q->setText(QString::number(quantity));
 }
 
@@ -27,12 +27,23 @@ void Book::Display(QStandardItemModel *table)
 {
     int index = table->rowCount();//sczytanie liczby wierszy
     table->setRowCount(index+1);//dodanie kolejnego wiersza
-    QStandardItem *itemId = new QStandardItem(QString::fromStdString(id));//tworzenie komórki tabeli, inicjowanej polem klasy
+    QStandardItem *itemId = new QStandardItem(id);//tworzenie komórki tabeli, inicjowanej polem klasy
     table->setItem(index,0,itemId);//wstawienie komórki do tabeli, argumenty: wiersz, kolumna i zawartość
-    QStandardItem *itemAuthor = new QStandardItem(QString::fromStdString(author));//tworzenie komórki tabeli, inicjowanej polem klasy
+    QStandardItem *itemAuthor = new QStandardItem(author);//tworzenie komórki tabeli, inicjowanej polem klasy
     table->setItem(index,1,itemAuthor);//wstawienie komórki do tabeli, argumenty: wiersz, kolumna i zawartość
-    QStandardItem *itemTitle = new QStandardItem(QString::fromStdString(title));//tworzenie komórki tabeli, inicjowanej polem klasy
+    QStandardItem *itemTitle = new QStandardItem(title);//tworzenie komórki tabeli, inicjowanej polem klasy
     table->setItem(index,2,itemTitle);//wstawienie komórki do tabeli, argumenty: wiersz, kolumna i zawartość
     QStandardItem *itemQuantity = new QStandardItem(QString::number(quantity));//tworzenie komórki tabeli, inicjowanej polem klasy
     table->setItem(index,3,itemQuantity);
+}
+
+QDataStream& operator<<(QDataStream & out, const Book &b)
+{
+    out << b.author << b.title << b.quantity << b.id;
+    return out;
+}
+QDataStream& operator>>(QDataStream &in, Book &b)
+{
+    in >> b.author >> b.title >> b.quantity >> b.id;
+    return in;
 }

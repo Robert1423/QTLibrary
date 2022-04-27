@@ -17,6 +17,9 @@ public:
     explicit DialogShowReader(QWidget *parent = nullptr);
     ~DialogShowReader();
 
+private slots:
+    void on_pay_released();
+
 private:
     Ui::DialogShowReader *ui;
 };

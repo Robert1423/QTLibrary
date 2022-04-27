@@ -15,6 +15,9 @@ public:
     explicit DialogEditBook(QWidget *parent = nullptr);
     ~DialogEditBook();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::DialogEditBook *ui;
 };

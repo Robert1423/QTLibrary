@@ -15,6 +15,9 @@ public:
     explicit DialogAddBook(QWidget *parent = nullptr);
     ~DialogAddBook();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::DialogAddBook *ui;
 };

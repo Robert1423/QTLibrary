@@ -6,6 +6,11 @@
 #include <QTableView>
 #include <QStandardItemModel>
 #include <QMessageBox>
+#include <QFile>
+#include <QCoreApplication>
+#include <QDataStream>
+#include <vector>
+#include <time.h>
 #include "dialogaddreader.h"
 #include "dialogaddbook.h"
 #include "dialogfinishrent.h"
@@ -14,11 +19,6 @@
 #include "dialogshowbook.h"
 #include "dialogeditbook.h"
 #include "dialogeditreader.h"
-#include <vector>
-#include <time.h>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/vector.hpp>
 
 using namespace std;
 const static double duemultiply = 5;//wartość kary za nieoddanie w terminie, dla uproszczenia

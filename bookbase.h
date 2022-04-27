@@ -7,19 +7,18 @@
 class BookBase
 {
 protected:
-    friend class boost::serialization::access;
-    std::vector<Book> books;
-    template<class Archive>
-    void serialize(Archive &a, const unsigned version)
-    {
-        a & books;
-    }
+    QVector<Book> books;
 public:
     BookBase();
     void ShowBase(QStandardItemModel * table);
-    void AddBook(Book b);
+    void AddBook(Book & b);
     void RemoveBook(int i);
-    int Search(string t, int i);
+    vector<int> SearchAll(string &t);
+    int Search(string &t);
+    int Size() {return books.size();}
+    Book& operator[](int i) {return books[i];}
+    friend QDataStream &operator<<(QDataStream & out, const BookBase &b);
+    friend QDataStream &operator>>(QDataStream & in, BookBase &b);
 };
 
 #endif // BOOKBASE_H
