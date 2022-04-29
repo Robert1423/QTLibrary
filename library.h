@@ -6,6 +6,13 @@
 #include <QTableView>
 #include <QStandardItemModel>
 #include <QMessageBox>
+#include <QFile>
+#include <QCoreApplication>
+#include <QDataStream>
+#include <QMouseEvent>
+#include <QPoint>
+#include <vector>
+#include <time.h>
 #include "dialogaddreader.h"
 #include "dialogaddbook.h"
 #include "dialogfinishrent.h"
@@ -14,11 +21,6 @@
 #include "dialogshowbook.h"
 #include "dialogeditbook.h"
 #include "dialogeditreader.h"
-#include <vector>
-#include <time.h>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/vector.hpp>
 
 using namespace std;
 const static double duemultiply = 5;//wartość kary za nieoddanie w terminie, dla uproszczenia
@@ -30,7 +32,7 @@ class Library : public QMainWindow
 {
     Q_OBJECT
 
-    QStandardItemModel *tableViewModel;
+//    QStandardItemModel *tableViewModel;
 
 
 
@@ -56,6 +58,14 @@ private slots:
 
     void on_Edit_released();
 
+    void on_Sort_released();
+
+    void on_Close_released();
+
+    void on_RemoveBook_released();
+
+    void on_FindBook_released();
+
 private:
     Ui::Library *ui;
     DialogAddReader *addReader;
@@ -66,5 +76,11 @@ private:
     DialogShowBook *showBook;
     DialogEditBook *editBook;
     DialogEditReader *editReader;
+
+//    void mousePressedEvent(QMouseEvent * event);
+//    void mouseMoveEvent(QMouseEvent * event);
+
+//    QPoint cur_pos;
+//    QPoint new_pos;
 };
 #endif // LIBRARY_H

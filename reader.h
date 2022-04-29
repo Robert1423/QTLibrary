@@ -6,31 +6,31 @@
 class Reader
 {
 protected:
-    friend class boost::serialization::access;
-    std::string ID;
-    std::string name;
+    QString ID;
+    QString name;
     double duesum;
     double paid;
-    std::vector<Rent> rents;
-    template<class Archive>
-    void serialize(Archive &a, const unsigned version)
-    {
-        a & ID & name & duesum & paid & rents;
-    }
+    QVector<Rent> rents;
 public:
     Reader();
-    Reader(std::string n) :name(n), duesum(0), paid(0) {}
+    Reader(QString n, int i) :name(n), duesum(0), paid(0) { SetId(i);}
     void SetId(int index);
     void Calculate();
     void Pay(double pay);
     bool CanRent();
-    void AddRent(Rent &b, DialogRent * dr);
-    void FinishRent(string title);
+    void AddRent(Rent &b);
+    void FinishRent(int i);
     void Show(QLineEdit *i, QLineEdit *n, QLineEdit *d, QStandardItemModel *table);
     void Display(QStandardItemModel *table);
-    void EditName(std::string n);
-    string Id() {return ID;}
-    string Name() {return name;}
+    void EditName(QString n);
+    int SearchRents(QString &t);
+    Rent FromRents(int i) {return rents[i];}
+    double GetDue() {return duesum;}
+    double GetPaid() {return paid;}
+    QString Id() {return ID;}
+    QString Name() {return name;}
+    friend QDataStream &operator<<(QDataStream & out, const Reader &b);
+    friend QDataStream &operator>>(QDataStream & in, Reader &b);
 };
 
 #endif // READER_H

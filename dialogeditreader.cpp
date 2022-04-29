@@ -1,5 +1,12 @@
 #include "dialogeditreader.h"
 #include "ui_dialogeditreader.h"
+#include "database.h"
+#include <QHeaderView>
+
+extern ReaderBase readers;
+extern QItemSelectionModel * select;
+extern QStandardItemModel *tableViewModel;
+extern QTableView * dataTable;
 
 DialogEditReader::DialogEditReader(QWidget *parent) :
     QDialog(parent),
@@ -7,9 +14,23 @@ DialogEditReader::DialogEditReader(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Edytuj...");
+    ui->ID->setText(readers[select->currentIndex().row()].Id());
 }
 
 DialogEditReader::~DialogEditReader()
 {
     delete ui;
 }
+
+void DialogEditReader::on_buttonBox_accepted()
+{
+    QString test = ui->Name->text();
+    if (QString::compare(test,""))
+        readers[select->currentIndex().row()].EditName(test);
+    else
+        QMessageBox::information(this,"Błąd!","Błędne dane!");
+    tableViewModel->clear();
+    readers.ShowBase(tableViewModel);
+    dataTable->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+}
+
