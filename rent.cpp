@@ -10,6 +10,7 @@ Rent::Rent(Book book)
     rented=book;
     std::time(&rentDate);
     time=14;
+    due = 0;
 }
 
 void Rent::Show(QStandardItemModel *table)
@@ -25,7 +26,7 @@ void Rent::Show(QStandardItemModel *table)
             QString::number(dateRent->tm_year+1900); //łąńcuch string daty wypożyczenia
     QStandardItem *itemRentDate = new QStandardItem(dateR);
     table->setItem(index,2,itemRentDate);
-    time_t exp=rentDate*time;
+    time_t exp=rentDate+(time*86400);
     tm * dateExp = localtime(&exp);
     QString dateE = QString::number(dateExp->tm_mday)+"/"+QString::number(dateExp->tm_mon+1)+"/"+
             QString::number(dateExp->tm_year+1900); //łąńcuch string daty wypożyczenia

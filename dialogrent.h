@@ -15,6 +15,9 @@ public:
     explicit DialogRent(QWidget *parent = nullptr);
     ~DialogRent();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::DialogRent *ui;
 };

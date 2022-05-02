@@ -10,16 +10,10 @@ DialogShowBook::DialogShowBook(QWidget *parent) :
     ui(new Ui::DialogShowBook)
 {
     ui->setupUi(this);
-    this->setWindowTitle("Książka");
-    QString filename[4];
-    for (int i = 0; i < 4; i++)
-        filename[i] = ":/img/img/Front" + QString::number(i+1);
-    srand(time(NULL));
-    QImage front;
-    front.load(filename[rand() % 4]);
-    front = front.scaledToWidth(ui->front->width(),Qt::SmoothTransformation);
-    ui->front->setPixmap(QPixmap::fromImage(front));
-    books[select->currentIndex().row()].Show(ui->ID, ui->Author, ui->Title, ui->Quantity);
+    this->setWindowFlags(Qt::WindowType::FramelessWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    if (select->hasSelection())
+        books[select->currentIndex().row()].Show(ui->ID, ui->Author, ui->Title, ui->Quantity, ui->front);
 }
 
 DialogShowBook::~DialogShowBook()

@@ -17,6 +17,7 @@ public:
     void Show(QStandardItemModel *table);
     double CalculateDue();
     QString Title() {return rented.Title();}
+    Book CheckBook() {return rented;}
     friend QDataStream &operator<<(QDataStream & out, const Rent &b);
     friend QDataStream &operator>>(QDataStream & in, Rent &b);
 };

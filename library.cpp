@@ -10,20 +10,25 @@ Database database;
 BookBase books;
 ReaderBase readers;
 
+QStandardItemModel *tableViewModel;
 QItemSelectionModel *select;
+QTableView * dataTable;
 
 Library::Library(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Library)
 {
     ui->setupUi(this);
-    this->setWindowTitle("Biblioteka");
-    this->setFixedSize(QSize(880,600));
+    this->setFixedSize(QSize(900,600));
+    this->setWindowFlags(Qt::WindowType::FramelessWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
     Load(database,this);
-    if (database.BooksSize() == 0 && database.ReadersSize() == 0)
-        ui->statusbar->showMessage("Pusta baza/Brak bazy", 5000);
     books = database.Books();
     readers = database.Readers();
+    dataTable = ui->data;
+    QImage logo;
+    logo.load(":/img/Logo.png");
+    ui->Logo->setPixmap(QPixmap::fromImage(logo));
     on_ShowBooks_released();
 }
 
@@ -74,10 +79,16 @@ void Library::on_ShowBooks_released()
     ui->data->setSelectionMode(QAbstractItemView::SingleSelection); // ustawiam możliwość zaznaczania pojedynczego rekordu
     if (books.Size()>0)
         books.ShowBase(tableViewModel);
-    else
-        //QMessageBox::information(this,"Błąd!", "Baza jest pusta!");
-        ui->statusbar->showMessage("Pusta baza", 5000);
-    ui->data->resizeColumnsToContents();
+    ui->data->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
+    ui->data->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+    ui->data->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);
+    ui->data->horizontalHeader()->setSectionResizeMode(3,QHeaderView::ResizeToContents);
+    ui->comboBox->clear();
+    ui->comboBox->setPlaceholderText("<sortuj>");
+    ui->comboBox->addItem("ID");
+    ui->comboBox->addItem("Autor");
+    ui->comboBox->addItem("Tytuł");
+    ui->comboBox->addItem("Ilość");
 }
 
 
@@ -92,9 +103,12 @@ void Library::on_ShowReaders_released()
     ui->data->setSelectionMode(QAbstractItemView::SingleSelection); // ustawiam możliwość zaznaczania pojedynczego rekordu
     if (readers.Size()>0)
         readers.ShowBase(tableViewModel);
-    else
-        ui->statusbar->showMessage("Pusta baza", 5000);
-    ui->data->resizeColumnsToContents();
+    ui->data->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
+    ui->data->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+    ui->comboBox->clear();
+    ui->comboBox->setPlaceholderText("<sortuj>");
+    ui->comboBox->addItem("ID");
+    ui->comboBox->addItem("Imię Nazwisko");
 }
 
 
@@ -128,6 +142,62 @@ void Library::on_Edit_released()
         select = ui->data->selectionModel();
         editBook = new DialogEditBook();
         editBook->show();
+    }
+}
+
+void Library::on_Sort_released()
+{
+    int i = ui->comboBox->currentIndex();
+    tableViewModel->sort(i);
+}
+
+
+void Library::on_Close_released()
+{
+    this->close();
+}
+
+
+void Library::on_RemoveBook_released()
+{
+    if (isreader)
+    {
+        select = ui->data->selectionModel();
+        readers.RemoveReader(select->currentIndex().row());
+        tableViewModel->removeRow(select->currentIndex().row());
+    }
+    else
+    {
+        select = ui->data->selectionModel();
+        books.RemoveBook(select->currentIndex().row());
+        tableViewModel->removeRow(select->currentIndex().row());
+    }
+}
+
+
+void Library::on_FindBook_released()
+{
+    vector<int> found;
+    QString search = ui->Title->text();
+    if (isreader)
+    {
+        found = readers.SearchAll(search);
+        tableViewModel->clear();
+        for (int i : found)
+            readers[i].Display(tableViewModel);
+        ui->data->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
+        ui->data->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+    }
+    else
+    {
+        found = books.SearchAll(search);
+        tableViewModel->clear();
+        for (int i : found)
+            books[i].Display(tableViewModel);
+        ui->data->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
+        ui->data->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+        ui->data->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);
+        ui->data->horizontalHeader()->setSectionResizeMode(3,QHeaderView::ResizeToContents);
     }
 }
 

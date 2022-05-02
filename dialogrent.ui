@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>340</width>
-    <height>145</height>
+    <width>341</width>
+    <height>140</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,6 +21,51 @@
      <width>301</width>
      <height>32</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#buttonBox *[text=&quot;OK&quot;] {
+	border-image: url(:/img/Short.png);
+	border-width: 20px;
+	color: white;
+	font: 900 10pt &quot;Segoe UI&quot;;
+}
+#buttonBox *[text=&quot;OK&quot;]:hover {
+	border-image: url(:/img/ShortHoover.png);
+	border-width: 20px;
+	color:white;
+	font: 900 10pt &quot;Segoe UI&quot;;
+}
+#buttonBox *[text=&quot;OK&quot;]:pressed {
+	border-image: url(:/img/ShortPressed.png);
+	border-width: 20px;
+	color:white;
+	font: 900 10pt &quot;Segoe UI&quot;;
+}
+
+#buttonBox *[text=&quot;Cancel&quot;] {
+	border-image: url(:/img/Short.png);
+	border-width: 20px;
+	color:white;
+	font: 900 10pt &quot;Segoe UI&quot;;
+}
+#buttonBox *[text=&quot;Cancel&quot;]:hover {
+	border-image: url(:/img/ShortHoover.png);
+	border-width: 20px;
+	color:white;
+	font: 900 10pt &quot;Segoe UI&quot;;
+}
+#buttonBox *[text=&quot;Cancel&quot;]:pressed {
+	border-image: url(:/img/ShortPressed.png);
+	border-width: 20px;
+	color:white;
+	font: 900 10pt &quot;Segoe UI&quot;;
+}</string>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
@@ -41,26 +86,68 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>Tytuł:</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="Title"/>
+     <widget class="QLineEdit" name="Title">
+      <property name="styleSheet">
+       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(152, 152, 152, 255), stop:1 rgba(255, 255, 255, 255));</string>
+      </property>
+     </widget>
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>Czytelnik:</string>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="Reader"/>
+     <widget class="QLineEdit" name="Reader">
+      <property name="styleSheet">
+       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(152, 152, 152, 255), stop:1 rgba(255, 255, 255, 255));</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>341</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/img/Back.png);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>buttonBox</zorder>
+  <zorder>layoutWidget</zorder>
  </widget>
  <resources/>
  <connections>

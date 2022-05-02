@@ -13,8 +13,8 @@ public:
     void ShowBase(QStandardItemModel * table);
     void AddBook(Book & b);
     void RemoveBook(int i);
-    vector<int> SearchAll(string &t);
-    int Search(string &t);
+    vector<int> SearchAll(QString &t);
+    int Search(QString &t);
     int Size() {return books.size();}
     Book& operator[](int i) {return books[i];}
     friend QDataStream &operator<<(QDataStream & out, const BookBase &b);

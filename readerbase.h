@@ -12,8 +12,8 @@ public:
     void ShowBase(QStandardItemModel * table);
     void AddReader(Reader &r) {readers.push_back(r);}
     void RemoveReader(int i) {readers.remove(i);}
-    vector<int> SearchAll(string &t);
-    int Search(string &t);
+    vector<int> SearchAll(QString &t);
+    int Search(QString &t);
     int Size() {return readers.size();}
     Reader& operator[](int i){return readers[i];}
     friend QDataStream &operator<<(QDataStream & out, const ReaderBase &b);

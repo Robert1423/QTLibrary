@@ -1,8 +1,23 @@
 <RCC>
-    <qresource prefix="/img">
+    <qresource prefix="/img"/>
+    <qresource prefix="/">
+        <file>img/Back.png</file>
+        <file>img/Button.png</file>
+        <file>img/Close.png</file>
+        <file>img/ClosePress.png</file>
         <file>img/Front1.jpg</file>
         <file>img/Front2.jpg</file>
         <file>img/Front3.jpg</file>
         <file>img/Front4.jpg</file>
+        <file>img/Max.png</file>
+        <file>img/MaxPress.png</file>
+        <file>img/Min.png</file>
+        <file>img/MinPress.png</file>
+        <file>img/Pressed.png</file>
+        <file>img/Short.png</file>
+        <file>img/ShortPressed.png</file>
+        <file>img/Hover.png</file>
+        <file>img/ShortHoover.png</file>
+        <file>img/Logo.png</file>
     </qresource>
 </RCC>

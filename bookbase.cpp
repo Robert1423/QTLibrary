@@ -2,10 +2,7 @@
 #include <QVector>
 
 BookBase::BookBase()
-{
-//    Book test("test","test",10,1);
-//    books.push_back(test);
-}
+{}
 
 void BookBase::ShowBase(QStandardItemModel * table)
 {
@@ -21,44 +18,46 @@ void BookBase::RemoveBook(int i)
     books.remove(i);
 }
 
-vector<int> BookBase::SearchAll(string &t)
+vector<int> BookBase::SearchAll(QString &t)
 {
     vector<int> res;
-    transform(t.begin(),t.end(),t.begin(),[](unsigned char c){ return toupper(c); });
     for (int i=0; i<(int)books.size(); i++)
     {
-        string test = books[i].Title().toStdString();
-        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
-        if (test.find(t) != string::npos)
+        if (books[i].Title().contains(t,Qt::CaseInsensitive))
+        {
             res.push_back(i);
-        test = books[i].Author().toStdString();
-        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
-        if (test.find(t) != string::npos)
+            continue;
+        }
+        if (books[i].Author().contains(t,Qt::CaseInsensitive))
+        {
             res.push_back(i);
-        test = books[i].Id().toStdString();
-        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
-        if (test.find(t) != string::npos)
+            continue;
+        }
+        if (books[i].Id().contains(t,Qt::CaseInsensitive))
+        {
             res.push_back(i);
+            continue;
+        }
     }
     return res;
 }
 
-int BookBase::Search(string &t)
+int BookBase::Search(QString &t)
 {
-    transform(t.begin(),t.end(),t.begin(),[](unsigned char c){ return toupper(c); });
+//    transform(t.begin(),t.end(),t.begin(),[](unsigned char c){ return toupper(c); });
     for (int i=0; i<(int)books.size(); i++)
     {
-        string test = books[i].Title().toStdString();
-        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
-        if (t == test)
+//        string test = books[i].Title().toStdString();
+//        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
+        if (books[i].Title().compare(t,Qt::CaseInsensitive) == 0)
             return i;
-        test = books[i].Author().toStdString();
-        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
-        if (t == test)
+//        test = books[i].Author().toStdString();
+//        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
+        if (books[i].Author().compare(t,Qt::CaseInsensitive) == 0)
             return i;
-        test = books[i].Id().toStdString();
-        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
-        if (t == test)
+//        test = books[i].Id().toStdString();
+//        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
+        if (books[i].Id().compare(t,Qt::CaseInsensitive) == 0)
             return i;
     }
     return -1; //jeżeli nie znaleziono

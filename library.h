@@ -9,6 +9,8 @@
 #include <QFile>
 #include <QCoreApplication>
 #include <QDataStream>
+#include <QMouseEvent>
+#include <QPoint>
 #include <vector>
 #include <time.h>
 #include "dialogaddreader.h"
@@ -30,7 +32,7 @@ class Library : public QMainWindow
 {
     Q_OBJECT
 
-    QStandardItemModel *tableViewModel;
+//    QStandardItemModel *tableViewModel;
 
 
 
@@ -55,6 +57,14 @@ private slots:
     void on_Show_released();
 
     void on_Edit_released();
+
+    void on_Sort_released();
+
+    void on_Close_released();
+
+    void on_RemoveBook_released();
+
+    void on_FindBook_released();
 
 private:
     Ui::Library *ui;

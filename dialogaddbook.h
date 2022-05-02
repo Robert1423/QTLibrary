@@ -18,6 +18,8 @@ public:
 private slots:
     void on_buttonBox_accepted();
 
+    void on_Add_released();
+
 private:
     Ui::DialogAddBook *ui;
 };

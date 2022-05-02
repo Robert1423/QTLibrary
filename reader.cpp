@@ -16,9 +16,11 @@ void Reader::SetId(int index)
 
 void Reader::Calculate()
 {
-    duesum=0;
+    double sum=0;
     foreach (Rent r, rents)
-      duesum+=r.CalculateDue();
+      sum+=r.CalculateDue();
+    if (sum > duesum)
+        duesum = sum;
     if (paid > duesum)
         duesum -= paid;
 }
@@ -34,26 +36,15 @@ void Reader::Pay(double pay)
 }
 bool Reader::CanRent()
 {
-    return duesum == 0 ? true : false;
+    return duesum <= 0 ? true : false;
 }
-void Reader::AddRent(Rent &b, DialogRent *dr)
+void Reader::AddRent(Rent &b)
 {
-    if (CanRent())
-        rents.push_back(b);
-    else
-        QMessageBox::warning(dr,"Błąd!","Nie można wypożyczyć, zbyt wysoka kara!");
+        rents.append(b);
 }
-void Reader::FinishRent(string title)
+void Reader::FinishRent(int i)
 {
-    int i;
-    for ( i = 0; i < (int)rents.size(); i++)
-    {
-        if (title == rents[i].Title().toStdString())
-        {
-            rents.remove(i);
-            break;
-        }
-    }
+    rents.remove(i);
 }
 void Reader::Show(QLineEdit *i, QLineEdit *n, QLineEdit *d, QStandardItemModel *table)
 {
@@ -76,6 +67,20 @@ void Reader::EditName(QString n)
 {
     if (QString::compare(n,""))
         name=n;
+}
+
+int Reader::SearchRents(QString &t)
+{
+    for (int i = 0; i < rents.size(); i++)
+    {
+        if (rents[i].CheckBook().Title().compare(t,Qt::CaseInsensitive) == 0)
+            return i;
+        if (rents[i].CheckBook().Author().compare(t,Qt::CaseInsensitive) == 0)
+            return i;
+        if (rents[i].CheckBook().Id().compare(t,Qt::CaseInsensitive) == 0)
+            return i;
+    }
+    return -1;
 }
 
 QDataStream &operator<<(QDataStream & out, const Reader &b)

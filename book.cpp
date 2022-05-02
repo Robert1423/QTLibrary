@@ -1,4 +1,5 @@
 #include "book.h"
+#include <QLabel>
 
 void Book::SetId(int index)
 {
@@ -15,12 +16,14 @@ bool Book::IsAvalaible()
     return quantity>0 ? true : false;
 }
 
-void Book::Show(QLineEdit * i, QLineEdit *a, QLineEdit *t, QLineEdit *q)
+void Book::Show(QLineEdit * i, QLineEdit *a, QLineEdit *t, QLineEdit *q, QLabel *l)
 {
     i->setText(id);
     a->setText(author);
     t->setText(title);
     q->setText(QString::number(quantity));
+    front = front.scaledToWidth(l->width(),Qt::SmoothTransformation);
+    l->setPixmap(QPixmap::fromImage(front));
 }
 
 void Book::Display(QStandardItemModel *table)
@@ -37,13 +40,24 @@ void Book::Display(QStandardItemModel *table)
     table->setItem(index,3,itemQuantity);
 }
 
+bool Book::operator==(Book &comp)
+{
+    bool res = false;
+    if (author.compare(comp.author,Qt::CaseInsensitive) == 0)
+    {
+        if (title.compare(comp.title,Qt::CaseInsensitive) == 0)
+            res = true;
+    }
+    return res;
+}
+
 QDataStream& operator<<(QDataStream & out, const Book &b)
 {
-    out << b.author << b.title << b.quantity << b.id;
+    out << b.author << b.title << b.quantity << b.id << b.front;
     return out;
 }
 QDataStream& operator>>(QDataStream &in, Book &b)
 {
-    in >> b.author >> b.title >> b.quantity >> b.id;
+    in >> b.author >> b.title >> b.quantity >> b.id >> b.front;
     return in;
 }

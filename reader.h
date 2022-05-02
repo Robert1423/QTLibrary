@@ -18,12 +18,15 @@ public:
     void Calculate();
     void Pay(double pay);
     bool CanRent();
-    void AddRent(Rent &b, DialogRent * dr);
-    void FinishRent(string title);
+    void AddRent(Rent &b);
+    void FinishRent(int i);
     void Show(QLineEdit *i, QLineEdit *n, QLineEdit *d, QStandardItemModel *table);
     void Display(QStandardItemModel *table);
     void EditName(QString n);
+    int SearchRents(QString &t);
+    Rent FromRents(int i) {return rents[i];}
     double GetDue() {return duesum;}
+    double GetPaid() {return paid;}
     QString Id() {return ID;}
     QString Name() {return name;}
     friend QDataStream &operator<<(QDataStream & out, const Reader &b);
