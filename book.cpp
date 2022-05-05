@@ -3,9 +3,9 @@
 
 void Book::SetId(int index)
 {
-    if (index>999)
+    if (index>99)
         id+="B"+QString::number(index);
-    else if (index>99)
+    else if (index>9)
         id+="B0"+QString::number(index);
     else
         id+="B00"+QString::number(index);
@@ -31,12 +31,26 @@ void Book::Display(QStandardItemModel *table)
     int index = table->rowCount();//sczytanie liczby wierszy
     table->setRowCount(index+1);//dodanie kolejnego wiersza
     QStandardItem *itemId = new QStandardItem(id);//tworzenie komórki tabeli, inicjowanej polem klasy
+    itemId->setTextAlignment(Qt::AlignCenter);//wyrównanie tekstu do środka
     table->setItem(index,0,itemId);//wstawienie komórki do tabeli, argumenty: wiersz, kolumna i zawartość
     QStandardItem *itemAuthor = new QStandardItem(author);//tworzenie komórki tabeli, inicjowanej polem klasy
     table->setItem(index,1,itemAuthor);//wstawienie komórki do tabeli, argumenty: wiersz, kolumna i zawartość
     QStandardItem *itemTitle = new QStandardItem(title);//tworzenie komórki tabeli, inicjowanej polem klasy
     table->setItem(index,2,itemTitle);//wstawienie komórki do tabeli, argumenty: wiersz, kolumna i zawartość
     QStandardItem *itemQuantity = new QStandardItem(QString::number(quantity));//tworzenie komórki tabeli, inicjowanej polem klasy
+    if (quantity>0)
+    {
+        //formatowanie komórek względem ilości sztuk
+        itemQuantity->setBackground(Qt::darkGreen);
+        itemQuantity->setForeground(Qt::white);
+        itemQuantity->setTextAlignment(Qt::AlignCenter);
+    }
+    else
+    {
+        itemQuantity->setBackground(Qt::red);
+        itemQuantity->setForeground(Qt::white);
+        itemQuantity->setTextAlignment(Qt::AlignCenter);
+    }
     table->setItem(index,3,itemQuantity);
 }
 

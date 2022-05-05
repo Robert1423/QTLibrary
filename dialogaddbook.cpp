@@ -7,7 +7,7 @@
 
 extern bool isreader;
 extern Database database;
-extern BookBase books;
+//extern BookBase books;
 extern QStandardItemModel *tableViewModel;
 QImage front;
 QString filename;
@@ -20,6 +20,7 @@ DialogAddBook::DialogAddBook(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::WindowType::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setModal(true); //zablokowanie głównego okna
 }
 
 DialogAddBook::~DialogAddBook()
@@ -39,11 +40,11 @@ void DialogAddBook::on_buttonBox_accepted()
     {
         if (QString::compare(filename,QString())==0)
             front.load(":/img/Front"+QString::number(rand()%4));
-        Book temp(qAuthor,qTitle,qQuantity,books.Size()+1,front);
-        books.AddBook(temp);
+        Book temp(qAuthor,qTitle,qQuantity,database.BooksSize()+1,front);
+        database.AddBook(temp);
     }
     if (!isreader)
-    books[books.Size()-1].Display(tableViewModel);
+    database.books[database.BooksSize()-1].Display(tableViewModel);
 }
 
 

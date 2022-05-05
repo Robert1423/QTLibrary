@@ -14,6 +14,7 @@ DialogAddReader::DialogAddReader(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::WindowType::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setModal(true);
 }
 
 DialogAddReader::~DialogAddReader()
@@ -28,10 +29,10 @@ void DialogAddReader::on_buttonBox_accepted()
         QMessageBox::information(this,"Błąd!","Błędne dane");
     else
     {
-        Reader temp(qName,database.Readers().Size()+1);
-        readers.AddReader(temp);
+        Reader temp(qName,database.ReadersSize()+1);
+        database.AddReader(temp);
     }
     if (isreader)
-        readers[readers.Size()-1].Display(tableViewModel);
+        database.Readers()[database.ReadersSize()-1].Display(tableViewModel);
 }
 

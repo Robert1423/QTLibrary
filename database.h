@@ -6,10 +6,9 @@
 
 class Database
 {
-private:
+public:
     BookBase books;
     ReaderBase readers;
-public:
     Database();
     Database(BookBase & b, ReaderBase & r) :books(b),readers(r){}
     void Set(BookBase & b, ReaderBase & r);
@@ -17,6 +16,8 @@ public:
     ReaderBase Readers() {return readers;}
     int BooksSize() {return books.Size();}
     int ReadersSize() {return readers.Size();}
+    void AddBook(Book & b) {books.AddBook(b);}
+    void AddReader(Reader & r) {readers.AddReader(r);}
     friend QDataStream &operator<<(QDataStream & out, const Database &b);
     friend QDataStream &operator>>(QDataStream & in, Database &b);
     friend void Save(Database &c, Library *Ui);

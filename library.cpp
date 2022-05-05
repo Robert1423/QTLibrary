@@ -23,8 +23,8 @@ Library::Library(QWidget *parent)
     this->setWindowFlags(Qt::WindowType::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     Load(database,this);
-    books = database.Books();
-    readers = database.Readers();
+//    books = database.books;
+//    readers = database.readers;
     dataTable = ui->data;
     QImage logo;
     logo.load(":/img/Logo.png");
@@ -34,7 +34,7 @@ Library::Library(QWidget *parent)
 
 Library::~Library()
 {
-    database.Set(books,readers);
+//    database.Set(books,readers);
     Save(database,this);
     delete ui;
 }
@@ -68,7 +68,6 @@ void Library::on_Unrent_released()
 
 void Library::on_ShowBooks_released()
 {
-    //QMessageBox::information(this,"Size",QString::number(books.Size()));
     isreader = false; //ustawienie sterowania obslugi reader/books
     tableViewModel = new QStandardItemModel(ui->data); //tworzenie sterowania tabelą
     ui->data->setModel(tableViewModel); //przypisanie sterowania to TableView
@@ -77,8 +76,8 @@ void Library::on_ShowBooks_released()
     ui->data->setEditTriggers(QAbstractItemView::NoEditTriggers);//wyłączenie edycji z pozycji tabeli
     ui->data->setSelectionBehavior(QAbstractItemView::SelectRows); // ustawiam zaznaczanie całych wierszy
     ui->data->setSelectionMode(QAbstractItemView::SingleSelection); // ustawiam możliwość zaznaczania pojedynczego rekordu
-    if (books.Size()>0)
-        books.ShowBase(tableViewModel);
+    if (database.books.Size()>0)
+        database.books.ShowBase(tableViewModel);
     ui->data->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
     ui->data->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
     ui->data->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);
@@ -101,8 +100,8 @@ void Library::on_ShowReaders_released()
     tableViewModel->setHorizontalHeaderLabels({"ID","Imię Nazwisko"}); //utowrzenie etykiet kolumn
     ui->data->setSelectionBehavior(QAbstractItemView::SelectRows); // ustawiam zaznaczanie całych wierszy
     ui->data->setSelectionMode(QAbstractItemView::SingleSelection); // ustawiam możliwość zaznaczania pojedynczego rekordu
-    if (readers.Size()>0)
-        readers.ShowBase(tableViewModel);
+    if (database.readers.Size()>0)
+        database.readers.ShowBase(tableViewModel);
     ui->data->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
     ui->data->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
     ui->comboBox->clear();
@@ -163,13 +162,13 @@ void Library::on_RemoveBook_released()
     if (isreader)
     {
         select = ui->data->selectionModel();
-        readers.RemoveReader(select->currentIndex().row());
+        database.readers.RemoveReader(select->currentIndex().row());
         tableViewModel->removeRow(select->currentIndex().row());
     }
     else
     {
         select = ui->data->selectionModel();
-        books.RemoveBook(select->currentIndex().row());
+        database.books.RemoveBook(select->currentIndex().row());
         tableViewModel->removeRow(select->currentIndex().row());
     }
 }
@@ -181,10 +180,10 @@ void Library::on_FindBook_released()
     QString search = ui->Title->text();
     if (isreader)
     {
-        found = readers.SearchAll(search);
+        found = database.readers.SearchAll(search);
         tableViewModel->clear();
         for (int i : found)
-            readers[i].Display(tableViewModel);
+            database.readers[i].Display(tableViewModel);
         ui->data->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
         ui->data->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
     }
@@ -193,7 +192,7 @@ void Library::on_FindBook_released()
         found = books.SearchAll(search);
         tableViewModel->clear();
         for (int i : found)
-            books[i].Display(tableViewModel);
+            database.books[i].Display(tableViewModel);
         ui->data->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
         ui->data->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
         ui->data->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);

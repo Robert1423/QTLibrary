@@ -6,9 +6,9 @@ Reader::Reader()
 }
 void Reader::SetId(int index)
 {
-    if (index>999)
+    if (index>99)
         ID+="R"+QString::number(index);
-    else if (index>99)
+    else if (index>9)
         ID+="R0"+QString::number(index);
     else
         ID+="R00"+QString::number(index);
@@ -59,6 +59,7 @@ void Reader::Display(QStandardItemModel *table)
     int index = table->rowCount();//sczytanie liczby wierszy
     table->setRowCount(index+1);//dodanie kolejnego wiersza
     QStandardItem *itemId = new QStandardItem(ID);//tworzenie komórki tabeli, inicjowanej polem klasy
+    itemId->setTextAlignment(Qt::AlignCenter);
     table->setItem(index,0,itemId);//wstawienie komórki do tabeli, argumenty: wiersz, kolumna i zawartość
     QStandardItem *itemName = new QStandardItem(name);//tworzenie komórki tabeli, inicjowanej polem klasy
     table->setItem(index,1,itemName);//wstawienie komórki do tabeli, argumenty: wiersz, kolumna i zawartość

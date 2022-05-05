@@ -4,7 +4,8 @@
 #include <QHeaderView>
 
 extern bool isreader;
-extern ReaderBase readers;
+extern Database database;
+//extern ReaderBase readers;
 extern QItemSelectionModel * select;
 extern QStandardItemModel *tableViewModel;
 extern QTableView * dataTable;
@@ -16,8 +17,9 @@ DialogEditReader::DialogEditReader(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::WindowType::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setModal(true);
     if (select->hasSelection())
-        ui->ID->setText(readers[select->currentIndex().row()].Id());
+        ui->ID->setText(database.readers[select->currentIndex().row()].Id());
 }
 
 DialogEditReader::~DialogEditReader()
@@ -31,16 +33,14 @@ void DialogEditReader::on_buttonBox_accepted()
     {
         QString test = ui->Name->text();
         if (QString::compare(test,""))
-            readers[select->currentIndex().row()].EditName(test);
+            database.readers[select->currentIndex().row()].EditName(test);
         else
             QMessageBox::information(this,"Błąd!","Błędne dane!");
-        if (isreader)
-        {
-            tableViewModel->clear();
-            readers.ShowBase(tableViewModel);
-            dataTable->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
-            dataTable->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
-        }
+        tableViewModel->clear();
+        tableViewModel->setHorizontalHeaderLabels({"ID","Imię Nazwisko"});
+        database.readers.ShowBase(tableViewModel);
+        dataTable->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
+        dataTable->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
     }
 }
 

@@ -44,19 +44,12 @@ vector<int> BookBase::SearchAll(QString &t)
 
 int BookBase::Search(QString &t)
 {
-//    transform(t.begin(),t.end(),t.begin(),[](unsigned char c){ return toupper(c); });
     for (int i=0; i<(int)books.size(); i++)
     {
-//        string test = books[i].Title().toStdString();
-//        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
         if (books[i].Title().compare(t,Qt::CaseInsensitive) == 0)
             return i;
-//        test = books[i].Author().toStdString();
-//        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
         if (books[i].Author().compare(t,Qt::CaseInsensitive) == 0)
             return i;
-//        test = books[i].Id().toStdString();
-//        transform(test.begin(),test.end(),test.begin(),[](unsigned char c){ return toupper(c); });
         if (books[i].Id().compare(t,Qt::CaseInsensitive) == 0)
             return i;
     }

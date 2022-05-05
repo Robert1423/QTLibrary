@@ -2,6 +2,7 @@
 #include "ui_dialogshowreader.h"
 #include "database.h"
 
+extern Database database;
 extern ReaderBase readers;
 extern QItemSelectionModel * select;
 
@@ -12,6 +13,7 @@ DialogShowReader::DialogShowReader(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::WindowType::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setModal(true);
     rentsTable = new QStandardItemModel(ui->Rents); //tworzenie sterowania tabelą
     ui->Rents->setModel(rentsTable); //przypisanie sterowania to Rents
     rentsTable->setColumnCount(4); //utworzenie liczby kolumn
@@ -25,8 +27,8 @@ DialogShowReader::DialogShowReader(QWidget *parent) :
     ui->Rents->setSelectionMode(QAbstractItemView::SingleSelection); // ustawiam możliwość zaznaczania pojedynczego rekordu
     if (select->hasSelection())
     {
-        readers[select->currentIndex().row()].Calculate();
-        readers[select->currentIndex().row()].Show(ui->ID,ui->Name,ui->Due,rentsTable);
+        database.Readers()[select->currentIndex().row()].Calculate();
+        database.Readers()[select->currentIndex().row()].Show(ui->ID,ui->Name,ui->Due,rentsTable);
     }
 }
 
@@ -39,11 +41,11 @@ void DialogShowReader::on_pay_released()
 {
     if (select->hasSelection())
     {
-        readers[select->currentIndex().row()].Pay(ui->payment->value());
-        QMessageBox::information(this,"Wpłata","Łącznie wpłacono: " + QString::number(readers[select->currentIndex().row()].GetPaid())+
-                "\nSuma należności: "+QString::number(readers[select->currentIndex().row()].GetDue()));
+        database.Readers()[select->currentIndex().row()].Pay(ui->payment->value());
+        QMessageBox::information(this,"Wpłata","Łącznie wpłacono: " + QString::number(database.Readers()[select->currentIndex().row()].GetPaid())+
+                "\nSuma należności: "+QString::number(database.Readers()[select->currentIndex().row()].GetDue()));
         ui->Due->clear();
-        ui->Due->setText(QString::number(readers[select->currentIndex().row()].GetDue()));
+        ui->Due->setText(QString::number(database.Readers()[select->currentIndex().row()].GetDue()));
     }
 }
 
